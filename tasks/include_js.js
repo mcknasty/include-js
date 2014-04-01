@@ -17,7 +17,8 @@ module.exports = function(grunt) {
     // Merge task-specific and/or target-specific options with these defaults.
     var options = this.options({
       prefix: '',
-      required: []
+      required: [],
+      force: false
     });
 
     var match = /<\!\-\-Scripts\-\->([\s\S.]*)<\!\-\-\/Scripts\-\->/igm;
@@ -45,12 +46,13 @@ module.exports = function(grunt) {
     }
     this.files.forEach(function(f) {
       var src = f.src.filter(function(filepath) {
-        if (!grunt.file.exists(filepath)) {
-          grunt.log.warn('Source file "' + filepath + '" not found.');
-          return false;
-        } else {
-          return true;
+        if (!options.force) {
+          if (!grunt.file.exists(filepath)) {
+            grunt.log.warn('Source file "' + filepath + '" not found.');
+            return false;
+          }
         }
+        return true;
       }).map(function(filepath) {
         return options.prefix + filepath;
       });

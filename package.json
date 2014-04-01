@@ -1,7 +1,7 @@
 {
   "name": "grunt-include-js",
   "description": "Includes javascript-files between <!--Scripts--><!--/Scripts--> at templates",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "homepage": "https://github.com/makingoff/include-js",
   "author": {
     "name": "makingoff",

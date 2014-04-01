@@ -100,7 +100,8 @@ grunt.initConfig({
     your_target: {
       options: { // optional
         prefix: '', // prefix for path to js-files. May be you want prepend ../ or something else
-        required: ['array of js-file for include to all templates at this target']
+        required: ['array of js-file for include to all templates at this target'],
+        force: false // true - include file if not exists
       },
       files: {
         'path-to-template': ['array of js-files to include']
