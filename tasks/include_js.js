@@ -18,7 +18,8 @@ module.exports = function(grunt) {
     var options = this.options({
       prefix: '',
       required: [],
-      force: false
+      force: false,
+      livereload: false
     });
 
     var match = /<\!\-\-Scripts\-\->([\s\S.]*)<\!\-\-\/Scripts\-\->/igm;
@@ -30,6 +31,7 @@ module.exports = function(grunt) {
     var required;
     var srcText = '';
     var requiredText = '';
+    grunt.log.writeln(this.files[0]);
 
     if (options.required.length) {
       required = options.required.filter(function(filepath) {
@@ -56,6 +58,9 @@ module.exports = function(grunt) {
       }).map(function(filepath) {
         return options.prefix + filepath;
       });
+      if (options.livereload) {
+        src.push('//localhost:35729/livereload.js');
+      }
       srcText = replacement (src);
       source = grunt.file.read(f.dest);
 
