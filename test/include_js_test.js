@@ -32,22 +32,24 @@ exports.include_js = {
 
     var actual = grunt.file.read('tmp/custom_options_first-set.html');
     var expected = grunt.file.read('test/expected/custom_options_first-set.html');
-    test.equal(actual, expected, 'should describe what the default behavior is.');
+    test.equal(actual, expected, 'First-set not equal.');
 
     test.done();
   },
   custom_options: function(test) {
-    test.expect(1);
+    test.expect(3);
 
     var actual = grunt.file.read('tmp/custom_options_second-set.html');
     var expected = grunt.file.read('test/fixtures/custom_options_second-set.html');
-    test.equal(actual, expected, 'should describe what the custom option(s) behavior is.');
-
-    test.expect(2);
+    test.equal(actual, expected, 'Second set not equal.');
 
     actual = grunt.file.read('tmp/custom_options_third-set.html');
     expected = grunt.file.read('test/fixtures/custom_options_third-set.html');
-    test.equal(actual, expected, 'should describe what the custom option(s) behavior is.');
+    test.equal(actual, expected, 'Third set not equal.');
+
+    actual = grunt.file.read('tmp/custom_options_four-set.html');
+    expected = grunt.file.read('test/fixtures/custom_options_four-set.html');
+    test.equal(actual, expected, 'Four set not equal.');
 
     test.done();
   },

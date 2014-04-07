@@ -42,9 +42,12 @@ module.exports = function(grunt) {
         options: {
           required: [
             'js/module_one.js',
-            'js/module_two.js'
+            'js/module_two.js',
+            'js/module_fake.js'
           ],
-          prefix: '../'
+          prefix: '../',
+          force: true,
+          livereload: true
         },
         files: {
           'tmp/custom_options_second-set.html': [
@@ -55,6 +58,9 @@ module.exports = function(grunt) {
           'tmp/custom_options_third-set.html': [
             'js/script_four.js',
             'js/script_five.js'
+          ],
+          'tmp/custom_options_four-set.html': [
+            'js/script_t*.js'
           ]
         }
       },
