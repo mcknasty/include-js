@@ -7,6 +7,7 @@
  */
 
 'use strict';
+var globule = require('globule');
 
 module.exports = function(grunt) {
 
