@@ -46,29 +46,21 @@ module.exports = function(grunt) {
       });
       requiredText = replacement(required);
     }
-    this.files.forEach(function(f) {
-      var src = f.src.filter(function(filepath) {
-        if (!options.force) {
-          if (!grunt.file.exists(filepath)) {
-            grunt.log.warn('Source file "' + filepath + '" not found.');
-            return false;
-          }
+    this.files.forEach(function (f) {
+        var expandedFiles = globule.find(f.orig.src);
+        var src = filterSource(expandedFiles);
+        if (options.livereload) {
+            src.push('//localhost:35729/livereload.js');
         }
-        return true;
-      }).map(function(filepath) {
-        return options.prefix + filepath;
-      });
-      if (options.livereload) {
-        src.push('//localhost:35729/livereload.js');
-      }
-      srcText = replacement (src);
-      source = grunt.file.read(f.dest);
 
-      // Write the destination file.
-      grunt.file.write(f.dest, source.replace(match, '<!--Scripts-->' + requiredText + srcText + '\n<!--/Scripts-->'));
+        srcText = replacement(src);
+        source = grunt.file.read(f.dest);
 
-      // Print a success message.
-      grunt.log.writeln('File "' + f.dest + '" including:' + (required ? '\n• ' + required.join('\n• ') : '') + (src ? '\n• ' + src.join('\n• ') : ''));
+        // Write the destination file.
+        grunt.file.write(f.dest, source.replace(match, '<!--Scripts-->' + requiredText + srcText + '\n<!--/Scripts-->'));
+
+        // Print a success message.
+        grunt.log.writeln('File "' + f.dest + '" including:' + (required ? '\n• ' + required.join('\n• ') : '') + (src ? '\n• ' + src.join('\n• ') : ''));
     });
   });
 
