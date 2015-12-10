@@ -47,6 +47,24 @@ module.exports = function(grunt) {
       });
       requiredText = replacement(required);
     }
+		
+		function filterSource(f) {
+      var src = f.src.filter(function(filepath) {
+        if (!options.force) {
+          if (!grunt.file.exists(filepath)) {
+            grunt.log.warn('Source file "' + filepath + '" not found.');
+            return false;
+          }
+        }
+        return true;
+      }).map(function(filepath) {
+				filepath = '~' + filepath.substring(1);
+        return options.prefix + filepath;
+      });
+			
+			return src;
+		}
+		
     this.files.forEach(function (f) {
         var expandedFiles = globule.find(f.orig.src);
         var src = filterSource(expandedFiles);
