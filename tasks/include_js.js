@@ -58,7 +58,7 @@ module.exports = function(grunt) {
             }
             return true;
         }).map(function(filepath) {
-		    filepath = '~' + filepath.substring(1);
+	    // filepath = '~' + filepath.substring(1);
             return options.prefix + filepath;
         });
 			
