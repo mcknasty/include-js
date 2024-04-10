@@ -32,7 +32,6 @@ module.exports = function(grunt) {
     var required;
     var srcText = '';
     var requiredText = '';
-    grunt.log.writeln(this.files[0]);
 
     if (options.required.length) {
       required = options.required.filter(function(filepath) {

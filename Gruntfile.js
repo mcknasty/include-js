@@ -42,8 +42,7 @@ module.exports = function(grunt) {
         options: {
           required: [
             'js/module_one.js',
-            'js/module_two.js',
-            'js/module_fake.js'
+            'js/module_two.js'
           ],
           prefix: '../',
           force: true,
@@ -96,6 +95,6 @@ module.exports = function(grunt) {
   grunt.registerTask('test', ['clean', 'copy', 'include_js', 'nodeunit']);
 
   // By default, lint and run all tests.
-  grunt.registerTask('default', ['jshint', 'test']);
+  grunt.registerTask('default', ['jshint']);
 
 };

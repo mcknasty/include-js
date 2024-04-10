@@ -26,7 +26,8 @@
     "node": ">= 0.8.0"
   },
   "scripts": {
-    "test": "grunt test"
+    "test": "npx grunt test",
+    "lint": "npx grunt"
   },
   "devDependencies": {
     "globule": "^1.3.4",
