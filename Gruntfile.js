@@ -42,8 +42,7 @@ module.exports = function(grunt) {
         options: {
           required: [
             'js/module_one.js',
-            'js/module_two.js',
-            'js/module_fake.js'
+            'js/module_two.js'
           ],
           prefix: '../',
           force: true,

@@ -22,6 +22,15 @@ var grunt = require('grunt');
     test.ifError(value)
 */
 
+function replace_newlines(str) {
+  return str.replace(/\r/g, '');
+}
+
+function file_get_contents(path) {
+  var contents = grunt.file.read(path);
+  return replace_newlines(contents);
+}
+
 exports.include_js = {
   setUp: function(done) {
     // setup here if necessary
@@ -30,8 +39,8 @@ exports.include_js = {
   default_options: function(test) {
     test.expect(1);
 
-    var actual = grunt.file.read('tmp/custom_options_first-set.html');
-    var expected = grunt.file.read('test/expected/custom_options_first-set.html');
+    var actual = file_get_contents('tmp/custom_options_first-set.html');
+    var expected = file_get_contents('test/expected/custom_options_first-set.html');
     test.equal(actual, expected, 'First-set not equal.');
 
     test.done();
@@ -39,16 +48,16 @@ exports.include_js = {
   custom_options: function(test) {
     test.expect(3);
 
-    var actual = grunt.file.read('tmp/custom_options_second-set.html');
-    var expected = grunt.file.read('test/fixtures/custom_options_second-set.html');
+    var actual = file_get_contents('tmp/custom_options_second-set.html');
+    var expected = file_get_contents('test/fixtures/custom_options_second-set.html');
     test.equal(actual, expected, 'Second set not equal.');
 
-    actual = grunt.file.read('tmp/custom_options_third-set.html');
-    expected = grunt.file.read('test/fixtures/custom_options_third-set.html');
+    actual = file_get_contents('tmp/custom_options_third-set.html');
+    expected = file_get_contents('test/fixtures/custom_options_third-set.html');
     test.equal(actual, expected, 'Third set not equal.');
 
-    actual = grunt.file.read('tmp/custom_options_four-set.html');
-    expected = grunt.file.read('test/fixtures/custom_options_four-set.html');
+    actual = file_get_contents('tmp/custom_options_four-set.html');
+    expected = file_get_contents('test/fixtures/custom_options_four-set.html');
     test.equal(actual, expected, 'Four set not equal.');
 
     test.done();
