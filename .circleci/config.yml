@@ -60,6 +60,10 @@ commands:
   unit-test:
     steps:
       - run:
+          command: npm run test:coverage:validate
+      - run:
+          command: npm run test:coverage
+      - run:
           command: npm run test
   
 

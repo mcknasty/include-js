@@ -9,14 +9,14 @@
 'use strict';
 
 module.exports = function(grunt) {
-
   // Project configuration.
   grunt.initConfig({
     jshint: {
       all: [
         'Gruntfile.js',
         'tasks/*.js',
-        '<%= nodeunit.tests %>',
+        'test/*.js',
+        'js/*.js'
       ],
       options: {
         jshintrc: '.jshintrc',
@@ -25,14 +25,14 @@ module.exports = function(grunt) {
 
     // Before generating any new files, remove any previously-created files.
     clean: {
-      tests: ['tmp'],
+      tests: ['test/tmp'],
     },
 
     // Configuration to be run (and then tested).
     include_js: {
       default_options: {
         files: {
-          'tmp/custom_options_first-set.html': [
+          'test/tmp/custom_options_first-set.html': [
             'js/script_one.js',
             'js/script_two.js'
           ]
@@ -41,41 +41,39 @@ module.exports = function(grunt) {
       custom_options: {
         options: {
           required: [
-            'js/module_one.js',
-            'js/module_two.js'
+            'js/script_one.js',
+            'js/script_two.js'
           ],
           prefix: '../',
           force: true,
           livereload: true
         },
         files: {
-          'tmp/custom_options_second-set.html': [
-            'js/script_one.js',
-            'js/script_two.js',
+          'test/tmp/custom_options_second-set.html': [
+            'js/module_one.js',
+            'js/module_two.js',
             'js/script_three.js'
           ],
-          'tmp/custom_options_third-set.html': [
+          'test/tmp/custom_options_third-set.html': [
+            'js/module_one.js',
+            'js/module_two.js',
             'js/script_four.js',
             'js/script_five.js'
           ],
-          'tmp/custom_options_four-set.html': [
-            'js/script_t*.js'
+          'test/tmp/custom_options_four-set.html': [
+            "js/module_one.js",
+            "js/module_two.js",
+            'js/script_five.js'
           ]
         }
       },
     },
-
-    // Unit tests.
-    nodeunit: {
-      tests: ['test/*_test.js'],
-    },
-
     copy: {
       tests: {
         expand: true,
-        cwd: 'templates/',
+        cwd: 'test/templates/',
         src: '**',
-        dest: 'tmp/'
+        dest: 'test/tmp/'
       }
     }
 
@@ -87,12 +85,11 @@ module.exports = function(grunt) {
   // These plugins provide necessary tasks.
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-clean');
-  grunt.loadNpmTasks('grunt-contrib-nodeunit');
   grunt.loadNpmTasks('grunt-contrib-copy');
 
   // Whenever the "test" task is run, first clean the "tmp" dir, then run this
   // plugin's task(s), then test the result.
-  grunt.registerTask('test', ['clean', 'copy', 'include_js', 'nodeunit']);
+  grunt.registerTask('pretest', ['clean', 'copy', 'include_js']);
 
   // By default, lint and run all tests.
   grunt.registerTask('default', ['jshint']);

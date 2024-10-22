@@ -24,8 +24,7 @@ module.exports = function(grunt) {
     });
 
     var match = /<\!\-\-Scripts\-\->([\s\S.]*)<\!\-\-\/Scripts\-\->/igm;
-		var replacement = function (arr)
-		{
+		var replacement = function (arr) {
 			return '\n<script type="text/javascript" src="' + arr.join('"></script>\n<script type="text/javascript" src="') + '"></script>';
 		};
     var source;
@@ -33,6 +32,7 @@ module.exports = function(grunt) {
     var srcText = '';
     var requiredText = '';
 
+    //Todo: this block is not covered by the test cases
     if (options.required.length) {
       required = options.required.filter(function(filepath) {
         if (!grunt.file.exists(filepath)) {
@@ -49,36 +49,36 @@ module.exports = function(grunt) {
 		
     function filterSource(f) {
         var src = f.filter(function(filepath) {
-            if (!options.force) {
-                if (!grunt.file.exists(filepath)) {
-                grunt.log.warn('Source file "' + filepath + '" not found.');
-                return false;
-                }
+          if (!options.force) {
+            //Todo: this block is not covered by the test cases
+            if (!grunt.file.exists(filepath)) {
+              grunt.log.warn('Source file "' + filepath + '" not found.');
+              return false;
             }
-            return true;
+          }
+          return true;
         }).map(function(filepath) {
-	    // filepath = '~' + filepath.substring(1);
-            return options.prefix + filepath;
+          return options.prefix + filepath;
         });
 			
         return src;
     }
 		
     this.files.forEach(function (f) {
-        var expandedFiles = globule.find(f.orig.src);
-        var src = filterSource(expandedFiles);
-        if (options.livereload) {
-            src.push('//localhost:35729/livereload.js');
-        }
+      var expandedFiles = globule.find(f.orig.src);
+      var src = filterSource(expandedFiles);
+      if (options.livereload) {
+          src.push('//localhost:35729/livereload.js');
+      }
 
-        srcText = replacement(src);
-        source = grunt.file.read(f.dest);
+      srcText = replacement(src);
+      source = grunt.file.read(f.dest);
 
-        // Write the destination file.
-        grunt.file.write(f.dest, source.replace(match, '<!--Scripts-->' + requiredText + srcText + '\n<!--/Scripts-->'));
+      // Write the destination file.
+      grunt.file.write(f.dest, source.replace(match, '<!--Scripts-->' + requiredText + srcText + '\n<!--/Scripts-->'));
 
-        // Print a success message.
-        grunt.log.writeln('File "' + f.dest + '" including:' + (required ? '\n• ' + required.join('\n• ') : '') + (src ? '\n• ' + src.join('\n• ') : ''));
+      // Print a success message.
+      grunt.log.writeln('File "' + f.dest + '" including:' + (required ? '\n• ' + required.join('\n• ') : '') + (src ? '\n• ' + src.join('\n• ') : ''));
     });
   });
 
