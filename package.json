@@ -26,16 +26,28 @@
     "node": ">= 0.8.0"
   },
   "scripts": {
-    "test": "npx grunt test",
+    "test": "npx mocha",
+    "test:coverage:validate": "node coverage-validate.js > c8Config.json && npx c8 -c c8Config.json mocha",
+    "test:coverage": "npx c8 mocha",
     "lint": "npx grunt"
   },
+  "c8": {
+    "--all": "",
+    "--exclude": "./js"
+  },
+  "mocha": {
+    "--timeout": "99999",
+    "--slow": "5000"
+  },
   "devDependencies": {
+    "c8": "^10.1.2",
+    "chai": "^4.5.0",
     "globule": "^1.3.4",
     "grunt": "^1.6.1",
     "grunt-contrib-clean": "^2.0.1",
     "grunt-contrib-copy": "^1.0.0",
     "grunt-contrib-jshint": "^3.2.0",
-    "grunt-contrib-nodeunit": "^5.0.0"
+    "mocha": "^10.7.3"
   },
   "peerDependencies": {
     "grunt": "^1.6.1"
